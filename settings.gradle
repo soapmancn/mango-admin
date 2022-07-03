@@ -1,0 +1,5 @@
+rootProject.name = 'mango'
+include 'mango-admin'
+include 'mango-common'
+include 'mango-core'
+
