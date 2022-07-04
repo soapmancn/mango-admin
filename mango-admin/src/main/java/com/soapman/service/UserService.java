@@ -3,6 +3,9 @@ package com.soapman.service;
 import com.soapman.entity.User;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
 /**
  * 用户管理(User)表服务接口
  *
@@ -51,4 +54,12 @@ public interface UserService {
      */
     boolean deleteById(Long id);
 
+    /**
+     * 导出Excel
+     * @param response
+     * @param user
+     * @param pageNum
+     * @param pageSize
+     */
+    void exportExcelUser(HttpServletResponse response, User user, Integer pageNum, Integer pageSize) throws IOException;
 }

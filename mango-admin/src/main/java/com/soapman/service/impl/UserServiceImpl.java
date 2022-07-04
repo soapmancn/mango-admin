@@ -1,5 +1,6 @@
 package com.soapman.service.impl;
 
+import com.alibaba.excel.EasyExcel;
 import com.soapman.entity.User;
 import com.soapman.dao.UserDao;
 import com.soapman.service.UserService;
@@ -7,6 +8,9 @@ import org.springframework.stereotype.Service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.net.URLEncoder;
 
 /**
  * 用户管理(User)表服务实现类
@@ -76,5 +80,23 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean deleteById(Long id) {
         return this.userDao.deleteById(id) > 0;
+    }
+
+    /**
+     * 导出Excel
+     * @param response
+     * @param user
+     * @param pageNum
+     * @param pageSize
+     * @throws IOException
+     */
+    @Override
+    public void exportExcelUser(HttpServletResponse response, User user, Integer pageNum, Integer pageSize) throws IOException {
+        response.setContentType("application/octet-stream");
+        response.setCharacterEncoding("utf-8");
+        String fileName = URLEncoder.encode("用户信息", "UTF-8").replaceAll("\\+", "%20");
+        response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
+        Page<User> page = queryByPage(user, pageNum, pageSize);
+        EasyExcel.write(response.getOutputStream(), User.class).sheet("用户信息").doWrite(page.getRecords());
     }
 }

@@ -1,5 +1,6 @@
 package com.soapman.controller;
 
+import com.alibaba.excel.EasyExcel;
 import com.soapman.entity.User;
 import com.soapman.service.UserService;
 import io.swagger.annotations.Api;
@@ -10,6 +11,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * 用户管理(User)表控制层
@@ -85,6 +88,20 @@ public class UserController {
     @DeleteMapping
     public ResponseEntity<Boolean> deleteById(Long id) {
         return ResponseEntity.ok(this.userService.deleteById(id));
+    }
+
+    /**
+     * 导出Excel
+     * @param response
+     * @param user
+     * @param pageNum
+     * @param pageSize
+     * @throws IOException
+     */
+    @ApiOperation("导出Excel")
+    @GetMapping("exportExcelUser")
+    public void exportExcelUser(HttpServletResponse response, User user, @RequestParam(name = "pageNum", defaultValue = "1") Integer pageNum, @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize) throws IOException {
+        userService.exportExcelUser(response, user, pageNum, pageSize);
     }
 
 }
