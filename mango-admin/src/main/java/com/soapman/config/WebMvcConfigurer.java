@@ -12,8 +12,6 @@ import java.util.List;
 @Configuration
 public class WebMvcConfigurer extends WebMvcConfigurationSupport {
 
-    @Autowired
-    private PageRequestHandlerMethodArgumentResolver pageRequestHandlerMethodArgumentResolver;
 
     //swagger2 配置
     @Override
@@ -33,16 +31,6 @@ public class WebMvcConfigurer extends WebMvcConfigurationSupport {
                 .maxAge(168000)
                 .allowedHeaders("*")
                 .allowCredentials(true);
-    }
-
-    /**
-     * 添加自定义参数解析器
-     *
-     * @param argumentResolvers
-     */
-    @Override
-    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-        argumentResolvers.add(pageRequestHandlerMethodArgumentResolver);
     }
 
 }

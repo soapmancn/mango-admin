@@ -1,15 +1,15 @@
 package com.soapman.service;
 
-import com.soapman.entity.User;
+import com.soapman.entity.RoleMenu;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 /**
- * 用户管理(User)表服务接口
+ * 角色菜单(RoleMenu)表服务接口
  *
  * @author soapman
  * @since 2022-07-04 14:59:33
  */
-public interface UserService {
+public interface RoleMenuService {
 
     /**
      * 通过ID查询单条数据
@@ -17,31 +17,31 @@ public interface UserService {
      * @param id 主键
      * @return 实例对象
      */
-    User queryById(Long id);
+    RoleMenu queryById(Long id);
 
     /**
      * 分页查询
      *
-     * @param user 筛选条件
+     * @param roleMenu 筛选条件
      * @return 查询结果
      */
-    Page<User> queryByPage(User user, Integer pageNum, Integer pageSize);
+    Page<RoleMenu> queryByPage(RoleMenu roleMenu, Integer pageNum, Integer pageSize);
 
     /**
      * 新增数据
      *
-     * @param user 实例对象
+     * @param roleMenu 实例对象
      * @return 实例对象
      */
-    User insert(User user);
+    RoleMenu insert(RoleMenu roleMenu);
 
     /**
      * 修改数据
      *
-     * @param user 实例对象
+     * @param roleMenu 实例对象
      * @return 实例对象
      */
-    User update(User user);
+    RoleMenu update(RoleMenu roleMenu);
 
     /**
      * 通过主键删除数据

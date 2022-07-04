@@ -10,67 +10,47 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * 用户管理(User)实体类
+ * 字典表(Dict)实体类
  *
  * @author soapman
- * @since 2022-07-04 14:59:33
+ * @since 2022-07-04 14:59:30
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class User implements Serializable {
-    private static final long serialVersionUID = -20136265706552900L;
+public class Dict implements Serializable {
+    private static final long serialVersionUID = 654426700557155069L;
     /**
      * 编号
      */
     @ApiModelProperty("编号")
     private Long id;
     /**
-     * 用户名
+     * 数据值
      */
-    @ApiModelProperty("用户名")
-    private String name;
+    @ApiModelProperty("数据值")
+    private String value;
     /**
-     * 昵称
+     * 标签名
      */
-    @ApiModelProperty("昵称")
-    private String nickName;
+    @ApiModelProperty("标签名")
+    private String label;
     /**
-     * 头像
+     * 类型
      */
-    @ApiModelProperty("头像")
-    private String avatar;
+    @ApiModelProperty("类型")
+    private String type;
     /**
-     * 密码
+     * 描述
      */
-    @ApiModelProperty("密码")
-    private String password;
+    @ApiModelProperty("描述")
+    private String description;
     /**
-     * 加密盐
+     * 排序（升序）
      */
-    @ApiModelProperty("加密盐")
-    private String salt;
-    /**
-     * 邮箱
-     */
-    @ApiModelProperty("邮箱")
-    private String email;
-    /**
-     * 手机号
-     */
-    @ApiModelProperty("手机号")
-    private String mobile;
-    /**
-     * 状态  0：禁用   1：正常
-     */
-    @ApiModelProperty("状态  0：禁用   1：正常")
-    private Integer status;
-    /**
-     * 机构ID
-     */
-    @ApiModelProperty("机构ID")
-    private Long deptId;
+    @ApiModelProperty("排序（升序）")
+    private Double sort;
     /**
      * 创建人
      */
@@ -91,6 +71,11 @@ public class User implements Serializable {
      */
     @ApiModelProperty("更新时间")
     private Date lastUpdateTime;
+    /**
+     * 备注信息
+     */
+    @ApiModelProperty("备注信息")
+    private String remarks;
     /**
      * 是否删除  -1：已删除  0：正常
      */

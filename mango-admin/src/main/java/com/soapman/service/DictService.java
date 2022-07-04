@@ -1,15 +1,15 @@
 package com.soapman.service;
 
-import com.soapman.entity.User;
+import com.soapman.entity.Dict;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 /**
- * 用户管理(User)表服务接口
+ * 字典表(Dict)表服务接口
  *
  * @author soapman
- * @since 2022-07-04 14:59:33
+ * @since 2022-07-04 14:59:31
  */
-public interface UserService {
+public interface DictService {
 
     /**
      * 通过ID查询单条数据
@@ -17,31 +17,31 @@ public interface UserService {
      * @param id 主键
      * @return 实例对象
      */
-    User queryById(Long id);
+    Dict queryById(Long id);
 
     /**
      * 分页查询
      *
-     * @param user 筛选条件
+     * @param dict 筛选条件
      * @return 查询结果
      */
-    Page<User> queryByPage(User user, Integer pageNum, Integer pageSize);
+    Page<Dict> queryByPage(Dict dict, Integer pageNum, Integer pageSize);
 
     /**
      * 新增数据
      *
-     * @param user 实例对象
+     * @param dict 实例对象
      * @return 实例对象
      */
-    User insert(User user);
+    Dict insert(Dict dict);
 
     /**
      * 修改数据
      *
-     * @param user 实例对象
+     * @param dict 实例对象
      * @return 实例对象
      */
-    User update(User user);
+    Dict update(Dict dict);
 
     /**
      * 通过主键删除数据

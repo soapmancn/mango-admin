@@ -4,9 +4,7 @@ import com.soapman.entity.User;
 import com.soapman.dao.UserDao;
 import com.soapman.service.UserService;
 import org.springframework.stereotype.Service;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 import javax.annotation.Resource;
 
@@ -14,7 +12,7 @@ import javax.annotation.Resource;
  * 用户管理(User)表服务实现类
  *
  * @author soapman
- * @since 2022-07-03 17:50:53
+ * @since 2022-07-04 14:59:33
  */
 @Service("userService")
 public class UserServiceImpl implements UserService {
@@ -35,14 +33,14 @@ public class UserServiceImpl implements UserService {
     /**
      * 分页查询
      *
-     * @param user        筛选条件
-     * @param pageRequest 分页对象
+     * @param user 筛选条件
      * @return 查询结果
      */
     @Override
-    public Page<User> queryByPage(User user, PageRequest pageRequest) {
-        long total = this.userDao.count(user);
-        return new PageImpl<>(this.userDao.queryAllByLimit(user, pageRequest), pageRequest, total);
+    public Page<User> queryByPage(User user, Integer pageNum, Integer pageSize) {
+        Page<User> page = new Page<>(pageNum, pageSize);
+        Page<User> pageResult = userDao.queryByPage(page, user);
+        return pageResult;
     }
 
     /**

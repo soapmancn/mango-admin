@@ -10,67 +10,32 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * 用户管理(User)实体类
+ * 角色管理(Role)实体类
  *
  * @author soapman
- * @since 2022-07-04 14:59:33
+ * @since 2022-07-04 14:59:32
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class User implements Serializable {
-    private static final long serialVersionUID = -20136265706552900L;
+public class Role implements Serializable {
+    private static final long serialVersionUID = -68669966181066677L;
     /**
      * 编号
      */
     @ApiModelProperty("编号")
     private Long id;
     /**
-     * 用户名
+     * 角色名称
      */
-    @ApiModelProperty("用户名")
+    @ApiModelProperty("角色名称")
     private String name;
     /**
-     * 昵称
+     * 备注
      */
-    @ApiModelProperty("昵称")
-    private String nickName;
-    /**
-     * 头像
-     */
-    @ApiModelProperty("头像")
-    private String avatar;
-    /**
-     * 密码
-     */
-    @ApiModelProperty("密码")
-    private String password;
-    /**
-     * 加密盐
-     */
-    @ApiModelProperty("加密盐")
-    private String salt;
-    /**
-     * 邮箱
-     */
-    @ApiModelProperty("邮箱")
-    private String email;
-    /**
-     * 手机号
-     */
-    @ApiModelProperty("手机号")
-    private String mobile;
-    /**
-     * 状态  0：禁用   1：正常
-     */
-    @ApiModelProperty("状态  0：禁用   1：正常")
-    private Integer status;
-    /**
-     * 机构ID
-     */
-    @ApiModelProperty("机构ID")
-    private Long deptId;
+    @ApiModelProperty("备注")
+    private String remark;
     /**
      * 创建人
      */

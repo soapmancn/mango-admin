@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.soapman.dao.UserRoleDao">
+
+    <resultMap type="com.soapman.entity.UserRole" id="UserRoleMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
+        <result property="roleId" column="role_id" jdbcType="INTEGER"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="lastUpdateBy" column="last_update_by" jdbcType="VARCHAR"/>
+        <result property="lastUpdateTime" column="last_update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="UserRoleMap">
+        select id,
+               user_id,
+               role_id,
+               create_by,
+               create_time,
+               last_update_by,
+               last_update_time
+        from sys_user_role
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryByPage" resultMap="UserRoleMap">
+        select
+        id, user_id, role_id, create_by, create_time, last_update_by, last_update_time
+        from sys_user_role
+        <where>
+            <if test="userRole.id != null">
+                and id = #{userRole.id}
+            </if>
+            <if test="userRole.userId != null">
+                and user_id = #{userRole.userId}
+            </if>
+            <if test="userRole.roleId != null">
+                and role_id = #{userRole.roleId}
+            </if>
+            <if test="userRole.createBy != null and userRole.createBy != ''">
+                and create_by = #{userRole.createBy}
+            </if>
+            <if test="userRole.createTime != null">
+                and create_time = #{userRole.createTime}
+            </if>
+            <if test="userRole.lastUpdateBy != null and userRole.lastUpdateBy != ''">
+                and last_update_by = #{userRole.lastUpdateBy}
+            </if>
+            <if test="userRole.lastUpdateTime != null">
+                and last_update_time = #{userRole.lastUpdateTime}
+            </if>
+        </where>
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from sys_user_role
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="roleId != null">
+                and role_id = #{roleId}
+            </if>
+            <if test="createBy != null and createBy != ''">
+                and create_by = #{createBy}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="lastUpdateBy != null and lastUpdateBy != ''">
+                and last_update_by = #{lastUpdateBy}
+            </if>
+            <if test="lastUpdateTime != null">
+                and last_update_time = #{lastUpdateTime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into sys_user_role(user_id, role_id, create_by, create_time, last_update_by, last_update_time)
+        values (#{userId}, #{roleId}, #{createBy}, #{createTime}, #{lastUpdateBy}, #{lastUpdateTime})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into sys_user_role(user_id, role_id, create_by, create_time, last_update_by, last_update_time)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.userId}, #{entity.roleId}, #{entity.createBy}, #{entity.createTime}, #{entity.lastUpdateBy},
+            #{entity.lastUpdateTime})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into sys_user_role(user_id, role_id, create_by, create_time, last_update_by, last_update_time)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.userId}, #{entity.roleId}, #{entity.createBy}, #{entity.createTime}, #{entity.lastUpdateBy},
+            #{entity.lastUpdateTime})
+        </foreach>
+        on duplicate key update
+        user_id = values(user_id),
+        role_id = values(role_id),
+        create_by = values(create_by),
+        create_time = values(create_time),
+        last_update_by = values(last_update_by),
+        last_update_time = values(last_update_time)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update sys_user_role
+        <set>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+            <if test="roleId != null">
+                role_id = #{roleId},
+            </if>
+            <if test="createBy != null and createBy != ''">
+                create_by = #{createBy},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="lastUpdateBy != null and lastUpdateBy != ''">
+                last_update_by = #{lastUpdateBy},
+            </if>
+            <if test="lastUpdateTime != null">
+                last_update_time = #{lastUpdateTime},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete
+        from sys_user_role
+        where id = #{id}
+    </delete>
+
+</mapper>
+

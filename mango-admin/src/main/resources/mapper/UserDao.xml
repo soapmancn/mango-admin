@@ -42,59 +42,58 @@
     </select>
 
     <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="UserMap">
+    <select id="queryByPage" resultMap="UserMap">
         select
         id, name, nick_name, avatar, password, salt, email, mobile, status, dept_id, create_by, create_time,
         last_update_by, last_update_time, del_flag
         from sys_user
         <where>
-            <if test="id != null">
-                and id = #{id}
+            <if test="user.id != null">
+                and id = #{user.id}
             </if>
-            <if test="name != null and name != ''">
-                and name = #{name}
+            <if test="user.name != null and user.name != ''">
+                and name = #{user.name}
             </if>
-            <if test="nickName != null and nickName != ''">
-                and nick_name = #{nickName}
+            <if test="user.nickName != null and user.nickName != ''">
+                and nick_name = #{user.nickName}
             </if>
-            <if test="avatar != null and avatar != ''">
-                and avatar = #{avatar}
+            <if test="user.avatar != null and user.avatar != ''">
+                and avatar = #{user.avatar}
             </if>
-            <if test="password != null and password != ''">
-                and password = #{password}
+            <if test="user.password != null and user.password != ''">
+                and password = #{user.password}
             </if>
-            <if test="salt != null and salt != ''">
-                and salt = #{salt}
+            <if test="user.salt != null and user.salt != ''">
+                and salt = #{user.salt}
             </if>
-            <if test="email != null and email != ''">
-                and email = #{email}
+            <if test="user.email != null and user.email != ''">
+                and email = #{user.email}
             </if>
-            <if test="mobile != null and mobile != ''">
-                and mobile = #{mobile}
+            <if test="user.mobile != null and user.mobile != ''">
+                and mobile = #{user.mobile}
             </if>
-            <if test="status != null">
-                and status = #{status}
+            <if test="user.status != null">
+                and status = #{user.status}
             </if>
-            <if test="deptId != null">
-                and dept_id = #{deptId}
+            <if test="user.deptId != null">
+                and dept_id = #{user.deptId}
             </if>
-            <if test="createBy != null and createBy != ''">
-                and create_by = #{createBy}
+            <if test="user.createBy != null and user.createBy != ''">
+                and create_by = #{user.createBy}
             </if>
-            <if test="createTime != null">
-                and create_time = #{createTime}
+            <if test="user.createTime != null">
+                and create_time = #{user.createTime}
             </if>
-            <if test="lastUpdateBy != null and lastUpdateBy != ''">
-                and last_update_by = #{lastUpdateBy}
+            <if test="user.lastUpdateBy != null and user.lastUpdateBy != ''">
+                and last_update_by = #{user.lastUpdateBy}
             </if>
-            <if test="lastUpdateTime != null">
-                and last_update_time = #{lastUpdateTime}
+            <if test="user.lastUpdateTime != null">
+                and last_update_time = #{user.lastUpdateTime}
             </if>
-            <if test="delFlag != null">
-                and del_flag = #{delFlag}
+            <if test="user.delFlag != null">
+                and del_flag = #{user.delFlag}
             </if>
         </where>
-        limit #{pageable.offset}, #{pageable.pageSize}
     </select>
 
     <!--统计总行数-->

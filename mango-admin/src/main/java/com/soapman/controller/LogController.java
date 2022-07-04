@@ -1,7 +1,7 @@
 package com.soapman.controller;
 
-import com.soapman.entity.User;
-import com.soapman.service.UserService;
+import com.soapman.entity.Log;
+import com.soapman.service.LogService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.ResponseEntity;
@@ -12,31 +12,31 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import javax.annotation.Resource;
 
 /**
- * 用户管理(User)表控制层
+ * 系统操作日志(Log)表控制层
  *
  * @author soapman
- * @since 2022-07-04 14:59:33
+ * @since 2022-07-04 14:59:31
  */
-@Api(tags = "用户管理")
+@Api(tags = "系统操作日志")
 @RestController
-@RequestMapping("user")
-public class UserController {
+@RequestMapping("log")
+public class LogController {
     /**
      * 服务对象
      */
     @Resource
-    private UserService userService;
+    private LogService logService;
 
     /**
      * 分页查询
      *
-     * @param user 筛选条件
+     * @param log 筛选条件
      * @return 查询结果
      */
     @ApiOperation("分页查询")
     @GetMapping
-    public ResponseEntity<Page<User>> queryByPage(User user, @RequestParam(name = "pageNum", defaultValue = "1") Integer pageNum, @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize) {
-        return ResponseEntity.ok(this.userService.queryByPage(user, pageNum, pageSize));
+    public ResponseEntity<Page<Log>> queryByPage(Log log, @RequestParam(name = "pageNum", defaultValue = "1") Integer pageNum, @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize) {
+        return ResponseEntity.ok(this.logService.queryByPage(log, pageNum, pageSize));
     }
 
     /**
@@ -47,32 +47,32 @@ public class UserController {
      */
     @ApiOperation("通过主键查询单条数据")
     @GetMapping("{id}")
-    public ResponseEntity<User> queryById(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(this.userService.queryById(id));
+    public ResponseEntity<Log> queryById(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(this.logService.queryById(id));
     }
 
     /**
      * 新增数据
      *
-     * @param user 实体
+     * @param log 实体
      * @return 新增结果
      */
     @ApiOperation("新增数据")
     @PostMapping
-    public ResponseEntity<User> add(@RequestBody User user) {
-        return ResponseEntity.ok(this.userService.insert(user));
+    public ResponseEntity<Log> add(@RequestBody Log log) {
+        return ResponseEntity.ok(this.logService.insert(log));
     }
 
     /**
      * 编辑数据
      *
-     * @param user 实体
+     * @param log 实体
      * @return 编辑结果
      */
     @ApiOperation("编辑数据")
     @PutMapping
-    public ResponseEntity<User> edit(@RequestBody User user) {
-        return ResponseEntity.ok(this.userService.update(user));
+    public ResponseEntity<Log> edit(@RequestBody Log log) {
+        return ResponseEntity.ok(this.logService.update(log));
     }
 
     /**
@@ -84,7 +84,7 @@ public class UserController {
     @ApiOperation("删除数据")
     @DeleteMapping
     public ResponseEntity<Boolean> deleteById(Long id) {
-        return ResponseEntity.ok(this.userService.deleteById(id));
+        return ResponseEntity.ok(this.logService.deleteById(id));
     }
 
 }
