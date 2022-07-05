@@ -3,10 +3,9 @@ package com.soapman.controller;
 import com.soapman.entity.RoleDept;
 import com.soapman.service.RoleDeptService;
 import io.swagger.annotations.Api;
+import com.soapman.core.http.HttpResult;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 
 import javax.annotation.Resource;
@@ -15,7 +14,7 @@ import javax.annotation.Resource;
  * 角色机构(RoleDept)表控制层
  *
  * @author soapman
- * @since 2022-07-04 14:59:32
+ * @since 2022-07-05 18:06:54
  */
 @Api(tags = "角色机构")
 @RestController
@@ -35,8 +34,8 @@ public class RoleDeptController {
      */
     @ApiOperation("分页查询")
     @GetMapping
-    public ResponseEntity<Page<RoleDept>> queryByPage(RoleDept roleDept, @RequestParam(name = "pageNum", defaultValue = "1") Integer pageNum, @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize) {
-        return ResponseEntity.ok(this.roleDeptService.queryByPage(roleDept, pageNum, pageSize));
+    public HttpResult queryByPage(RoleDept roleDept, @RequestParam(name = "pageNum", defaultValue = "1") Integer pageNum, @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize) {
+        return HttpResult.ok(roleDeptService.queryByPage(roleDept, pageNum, pageSize));
     }
 
     /**
@@ -47,32 +46,32 @@ public class RoleDeptController {
      */
     @ApiOperation("通过主键查询单条数据")
     @GetMapping("{id}")
-    public ResponseEntity<RoleDept> queryById(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(this.roleDeptService.queryById(id));
+    public HttpResult queryById(@PathVariable("id") Long id) {
+        return HttpResult.ok(roleDeptService.getById(id));
     }
 
     /**
      * 新增数据
      *
      * @param roleDept 实体
-     * @return 新增结果
+     * @return 新增是否成功
      */
     @ApiOperation("新增数据")
     @PostMapping
-    public ResponseEntity<RoleDept> add(@RequestBody RoleDept roleDept) {
-        return ResponseEntity.ok(this.roleDeptService.insert(roleDept));
+    public HttpResult add(@RequestBody RoleDept roleDept) {
+        return HttpResult.ok(roleDeptService.save(roleDept));
     }
 
     /**
      * 编辑数据
      *
      * @param roleDept 实体
-     * @return 编辑结果
+     * @return 编辑是否成功
      */
     @ApiOperation("编辑数据")
     @PutMapping
-    public ResponseEntity<RoleDept> edit(@RequestBody RoleDept roleDept) {
-        return ResponseEntity.ok(this.roleDeptService.update(roleDept));
+    public HttpResult edit(@RequestBody RoleDept roleDept) {
+        return HttpResult.ok(roleDeptService.updateById(roleDept));
     }
 
     /**
@@ -83,8 +82,8 @@ public class RoleDeptController {
      */
     @ApiOperation("删除数据")
     @DeleteMapping
-    public ResponseEntity<Boolean> deleteById(Long id) {
-        return ResponseEntity.ok(this.roleDeptService.deleteById(id));
+    public HttpResult deleteById(Long id) {
+        return HttpResult.ok(roleDeptService.removeById(id));
     }
 
 }

@@ -1,30 +1,40 @@
 package com.soapman.entity;
 
 import java.util.Date;
+
+
+import lombok.*;
+
 import java.io.Serializable;
 
-import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 
 /**
  * 用户角色(UserRole)实体类
  *
  * @author soapman
- * @since 2022-07-04 14:59:33
+ * @since 2022-07-05 18:06:54
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserRole implements Serializable {
-    private static final long serialVersionUID = -87956972592842354L;
+@ApiModel(description = "UserRole实体类")
+@TableName("sys_user_role")
+public class UserRole extends Model<UserRole> implements Serializable {
+    private static final long serialVersionUID = -34909995920600330L;
     /**
      * 编号
      */
     @ApiModelProperty("编号")
+    @TableId(type = IdType.AUTO)
     private Long id;
     /**
      * 用户ID

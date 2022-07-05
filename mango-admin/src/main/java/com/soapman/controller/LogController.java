@@ -3,10 +3,9 @@ package com.soapman.controller;
 import com.soapman.entity.Log;
 import com.soapman.service.LogService;
 import io.swagger.annotations.Api;
+import com.soapman.core.http.HttpResult;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 
 import javax.annotation.Resource;
@@ -15,7 +14,7 @@ import javax.annotation.Resource;
  * 系统操作日志(Log)表控制层
  *
  * @author soapman
- * @since 2022-07-04 14:59:31
+ * @since 2022-07-05 18:06:53
  */
 @Api(tags = "系统操作日志")
 @RestController
@@ -35,8 +34,8 @@ public class LogController {
      */
     @ApiOperation("分页查询")
     @GetMapping
-    public ResponseEntity<Page<Log>> queryByPage(Log log, @RequestParam(name = "pageNum", defaultValue = "1") Integer pageNum, @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize) {
-        return ResponseEntity.ok(this.logService.queryByPage(log, pageNum, pageSize));
+    public HttpResult queryByPage(Log log, @RequestParam(name = "pageNum", defaultValue = "1") Integer pageNum, @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize) {
+        return HttpResult.ok(logService.queryByPage(log, pageNum, pageSize));
     }
 
     /**
@@ -47,32 +46,32 @@ public class LogController {
      */
     @ApiOperation("通过主键查询单条数据")
     @GetMapping("{id}")
-    public ResponseEntity<Log> queryById(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(this.logService.queryById(id));
+    public HttpResult queryById(@PathVariable("id") Long id) {
+        return HttpResult.ok(logService.getById(id));
     }
 
     /**
      * 新增数据
      *
      * @param log 实体
-     * @return 新增结果
+     * @return 新增是否成功
      */
     @ApiOperation("新增数据")
     @PostMapping
-    public ResponseEntity<Log> add(@RequestBody Log log) {
-        return ResponseEntity.ok(this.logService.insert(log));
+    public HttpResult add(@RequestBody Log log) {
+        return HttpResult.ok(logService.save(log));
     }
 
     /**
      * 编辑数据
      *
      * @param log 实体
-     * @return 编辑结果
+     * @return 编辑是否成功
      */
     @ApiOperation("编辑数据")
     @PutMapping
-    public ResponseEntity<Log> edit(@RequestBody Log log) {
-        return ResponseEntity.ok(this.logService.update(log));
+    public HttpResult edit(@RequestBody Log log) {
+        return HttpResult.ok(logService.updateById(log));
     }
 
     /**
@@ -83,8 +82,8 @@ public class LogController {
      */
     @ApiOperation("删除数据")
     @DeleteMapping
-    public ResponseEntity<Boolean> deleteById(Long id) {
-        return ResponseEntity.ok(this.logService.deleteById(id));
+    public HttpResult deleteById(Long id) {
+        return HttpResult.ok(logService.removeById(id));
     }
 
 }

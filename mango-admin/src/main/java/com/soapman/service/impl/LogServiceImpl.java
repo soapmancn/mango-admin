@@ -1,80 +1,49 @@
 package com.soapman.service.impl;
 
+import java.util.Objects;
+
 import com.soapman.entity.Log;
-import com.soapman.dao.LogDao;
+import com.soapman.mapper.LogMapper;
 import com.soapman.service.LogService;
 import org.springframework.stereotype.Service;
+import org.apache.commons.lang3.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-
-import javax.annotation.Resource;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 /**
  * 系统操作日志(Log)表服务实现类
  *
  * @author soapman
- * @since 2022-07-04 14:59:31
+ * @since 2022-07-05 18:06:53
  */
-@Service("logService")
-public class LogServiceImpl implements LogService {
-    @Resource
-    private LogDao logDao;
-
-    /**
-     * 通过ID查询单条数据
-     *
-     * @param id 主键
-     * @return 实例对象
-     */
-    @Override
-    public Log queryById(Long id) {
-        return this.logDao.queryById(id);
-    }
+@Service
+public class LogServiceImpl extends ServiceImpl<LogMapper, Log> implements LogService {
 
     /**
      * 分页查询
      *
-     * @param log 筛选条件
-     * @return 查询结果
+     * @param log
+     * @param pageNum
+     * @param pageSize
+     * @return
      */
     @Override
     public Page<Log> queryByPage(Log log, Integer pageNum, Integer pageSize) {
         Page<Log> page = new Page<>(pageNum, pageSize);
-        Page<Log> pageResult = logDao.queryByPage(page, log);
-        return pageResult;
+        QueryWrapper<Log> wrapper = new QueryWrapper<>();
+        if (!Objects.isNull(log)) {
+            //自定义过滤条件
+            wrapper.like(StringUtils.isNotBlank(log.getUserName()), "userName", log.getUserName());
+            wrapper.like(StringUtils.isNotBlank(log.getOperation()), "operation", log.getOperation());
+            wrapper.like(StringUtils.isNotBlank(log.getMethod()), "method", log.getMethod());
+            wrapper.like(StringUtils.isNotBlank(log.getParams()), "params", log.getParams());
+            wrapper.like(StringUtils.isNotBlank(log.getIp()), "ip", log.getIp());
+            wrapper.like(StringUtils.isNotBlank(log.getCreateBy()), "createBy", log.getCreateBy());
+            wrapper.like(StringUtils.isNotBlank(log.getLastUpdateBy()), "lastUpdateBy", log.getLastUpdateBy());
+        }
+        Page<Log> result = baseMapper.selectPage(page, wrapper);
+        return result;
     }
 
-    /**
-     * 新增数据
-     *
-     * @param log 实例对象
-     * @return 实例对象
-     */
-    @Override
-    public Log insert(Log log) {
-        this.logDao.insert(log);
-        return log;
-    }
-
-    /**
-     * 修改数据
-     *
-     * @param log 实例对象
-     * @return 实例对象
-     */
-    @Override
-    public Log update(Log log) {
-        this.logDao.update(log);
-        return this.queryById(log.getId());
-    }
-
-    /**
-     * 通过主键删除数据
-     *
-     * @param id 主键
-     * @return 是否成功
-     */
-    @Override
-    public boolean deleteById(Long id) {
-        return this.logDao.deleteById(id) > 0;
-    }
 }

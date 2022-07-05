@@ -1,30 +1,40 @@
 package com.soapman.entity;
 
 import java.util.Date;
+
+
+import lombok.*;
+
 import java.io.Serializable;
 
-import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 
 /**
  * 系统配置表(Config)实体类
  *
  * @author soapman
- * @since 2022-07-04 14:59:29
+ * @since 2022-07-05 18:06:53
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Config implements Serializable {
-    private static final long serialVersionUID = 605483209206432956L;
+@ApiModel(description = "Config实体类")
+@TableName("sys_config")
+public class Config extends Model<Config> implements Serializable {
+    private static final long serialVersionUID = -24973900569640419L;
     /**
      * 编号
      */
     @ApiModelProperty("编号")
+    @TableId(type = IdType.AUTO)
     private Long id;
     /**
      * 数据值

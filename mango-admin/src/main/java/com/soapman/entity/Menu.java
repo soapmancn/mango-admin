@@ -1,30 +1,40 @@
 package com.soapman.entity;
 
 import java.util.Date;
+
+
+import lombok.*;
+
 import java.io.Serializable;
 
-import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 
 /**
  * 菜单管理(Menu)实体类
  *
  * @author soapman
- * @since 2022-07-04 14:59:32
+ * @since 2022-07-05 18:06:53
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Menu implements Serializable {
-    private static final long serialVersionUID = 843590281347100140L;
+@ApiModel(description = "Menu实体类")
+@TableName("sys_menu")
+public class Menu extends Model<Menu> implements Serializable {
+    private static final long serialVersionUID = 504593972268476860L;
     /**
      * 编号
      */
     @ApiModelProperty("编号")
+    @TableId(type = IdType.AUTO)
     private Long id;
     /**
      * 菜单名称

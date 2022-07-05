@@ -3,10 +3,9 @@ package com.soapman.controller;
 import com.soapman.entity.Dict;
 import com.soapman.service.DictService;
 import io.swagger.annotations.Api;
+import com.soapman.core.http.HttpResult;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 
 import javax.annotation.Resource;
@@ -15,7 +14,7 @@ import javax.annotation.Resource;
  * 字典表(Dict)表控制层
  *
  * @author soapman
- * @since 2022-07-04 14:59:30
+ * @since 2022-07-05 18:06:53
  */
 @Api(tags = "字典表")
 @RestController
@@ -35,8 +34,8 @@ public class DictController {
      */
     @ApiOperation("分页查询")
     @GetMapping
-    public ResponseEntity<Page<Dict>> queryByPage(Dict dict, @RequestParam(name = "pageNum", defaultValue = "1") Integer pageNum, @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize) {
-        return ResponseEntity.ok(this.dictService.queryByPage(dict, pageNum, pageSize));
+    public HttpResult queryByPage(Dict dict, @RequestParam(name = "pageNum", defaultValue = "1") Integer pageNum, @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize) {
+        return HttpResult.ok(dictService.queryByPage(dict, pageNum, pageSize));
     }
 
     /**
@@ -47,32 +46,32 @@ public class DictController {
      */
     @ApiOperation("通过主键查询单条数据")
     @GetMapping("{id}")
-    public ResponseEntity<Dict> queryById(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(this.dictService.queryById(id));
+    public HttpResult queryById(@PathVariable("id") Long id) {
+        return HttpResult.ok(dictService.getById(id));
     }
 
     /**
      * 新增数据
      *
      * @param dict 实体
-     * @return 新增结果
+     * @return 新增是否成功
      */
     @ApiOperation("新增数据")
     @PostMapping
-    public ResponseEntity<Dict> add(@RequestBody Dict dict) {
-        return ResponseEntity.ok(this.dictService.insert(dict));
+    public HttpResult add(@RequestBody Dict dict) {
+        return HttpResult.ok(dictService.save(dict));
     }
 
     /**
      * 编辑数据
      *
      * @param dict 实体
-     * @return 编辑结果
+     * @return 编辑是否成功
      */
     @ApiOperation("编辑数据")
     @PutMapping
-    public ResponseEntity<Dict> edit(@RequestBody Dict dict) {
-        return ResponseEntity.ok(this.dictService.update(dict));
+    public HttpResult edit(@RequestBody Dict dict) {
+        return HttpResult.ok(dictService.updateById(dict));
     }
 
     /**
@@ -83,8 +82,8 @@ public class DictController {
      */
     @ApiOperation("删除数据")
     @DeleteMapping
-    public ResponseEntity<Boolean> deleteById(Long id) {
-        return ResponseEntity.ok(this.dictService.deleteById(id));
+    public HttpResult deleteById(Long id) {
+        return HttpResult.ok(dictService.removeById(id));
     }
 
 }

@@ -1,80 +1,45 @@
 package com.soapman.service.impl;
 
+import java.util.Objects;
+
 import com.soapman.entity.Dept;
-import com.soapman.dao.DeptDao;
+import com.soapman.mapper.DeptMapper;
 import com.soapman.service.DeptService;
 import org.springframework.stereotype.Service;
+import org.apache.commons.lang3.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-
-import javax.annotation.Resource;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 /**
  * 机构管理(Dept)表服务实现类
  *
  * @author soapman
- * @since 2022-07-04 14:59:30
+ * @since 2022-07-05 18:06:53
  */
-@Service("deptService")
-public class DeptServiceImpl implements DeptService {
-    @Resource
-    private DeptDao deptDao;
-
-    /**
-     * 通过ID查询单条数据
-     *
-     * @param id 主键
-     * @return 实例对象
-     */
-    @Override
-    public Dept queryById(Long id) {
-        return this.deptDao.queryById(id);
-    }
+@Service
+public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements DeptService {
 
     /**
      * 分页查询
      *
-     * @param dept 筛选条件
-     * @return 查询结果
+     * @param dept
+     * @param pageNum
+     * @param pageSize
+     * @return
      */
     @Override
     public Page<Dept> queryByPage(Dept dept, Integer pageNum, Integer pageSize) {
         Page<Dept> page = new Page<>(pageNum, pageSize);
-        Page<Dept> pageResult = deptDao.queryByPage(page, dept);
-        return pageResult;
+        QueryWrapper<Dept> wrapper = new QueryWrapper<>();
+        if (!Objects.isNull(dept)) {
+            //自定义过滤条件
+            wrapper.like(StringUtils.isNotBlank(dept.getName()), "name", dept.getName());
+            wrapper.like(StringUtils.isNotBlank(dept.getCreateBy()), "createBy", dept.getCreateBy());
+            wrapper.like(StringUtils.isNotBlank(dept.getLastUpdateBy()), "lastUpdateBy", dept.getLastUpdateBy());
+        }
+        Page<Dept> result = baseMapper.selectPage(page, wrapper);
+        return result;
     }
 
-    /**
-     * 新增数据
-     *
-     * @param dept 实例对象
-     * @return 实例对象
-     */
-    @Override
-    public Dept insert(Dept dept) {
-        this.deptDao.insert(dept);
-        return dept;
-    }
-
-    /**
-     * 修改数据
-     *
-     * @param dept 实例对象
-     * @return 实例对象
-     */
-    @Override
-    public Dept update(Dept dept) {
-        this.deptDao.update(dept);
-        return this.queryById(dept.getId());
-    }
-
-    /**
-     * 通过主键删除数据
-     *
-     * @param id 主键
-     * @return 是否成功
-     */
-    @Override
-    public boolean deleteById(Long id) {
-        return this.deptDao.deleteById(id) > 0;
-    }
 }

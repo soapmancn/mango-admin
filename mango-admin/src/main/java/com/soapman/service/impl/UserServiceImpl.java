@@ -1,102 +1,51 @@
 package com.soapman.service.impl;
 
-import com.alibaba.excel.EasyExcel;
+import java.util.Objects;
+
 import com.soapman.entity.User;
-import com.soapman.dao.UserDao;
+import com.soapman.mapper.UserMapper;
 import com.soapman.service.UserService;
 import org.springframework.stereotype.Service;
+import org.apache.commons.lang3.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.net.URLEncoder;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 /**
  * 用户管理(User)表服务实现类
  *
  * @author soapman
- * @since 2022-07-04 14:59:33
+ * @since 2022-07-05 18:06:54
  */
-@Service("userService")
-public class UserServiceImpl implements UserService {
-    @Resource
-    private UserDao userDao;
-
-    /**
-     * 通过ID查询单条数据
-     *
-     * @param id 主键
-     * @return 实例对象
-     */
-    @Override
-    public User queryById(Long id) {
-        return this.userDao.queryById(id);
-    }
+@Service
+public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
     /**
      * 分页查询
      *
-     * @param user 筛选条件
-     * @return 查询结果
+     * @param user
+     * @param pageNum
+     * @param pageSize
+     * @return
      */
     @Override
     public Page<User> queryByPage(User user, Integer pageNum, Integer pageSize) {
         Page<User> page = new Page<>(pageNum, pageSize);
-        Page<User> pageResult = userDao.queryByPage(page, user);
-        return pageResult;
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+        if (!Objects.isNull(user)) {
+            //自定义过滤条件
+            wrapper.like(StringUtils.isNotBlank(user.getName()), "name", user.getName());
+            wrapper.like(StringUtils.isNotBlank(user.getNickName()), "nickName", user.getNickName());
+            wrapper.like(StringUtils.isNotBlank(user.getAvatar()), "avatar", user.getAvatar());
+            wrapper.like(StringUtils.isNotBlank(user.getPassword()), "password", user.getPassword());
+            wrapper.like(StringUtils.isNotBlank(user.getSalt()), "salt", user.getSalt());
+            wrapper.like(StringUtils.isNotBlank(user.getEmail()), "email", user.getEmail());
+            wrapper.like(StringUtils.isNotBlank(user.getMobile()), "mobile", user.getMobile());
+            wrapper.like(StringUtils.isNotBlank(user.getCreateBy()), "createBy", user.getCreateBy());
+            wrapper.like(StringUtils.isNotBlank(user.getLastUpdateBy()), "lastUpdateBy", user.getLastUpdateBy());
+        }
+        Page<User> result = baseMapper.selectPage(page, wrapper);
+        return result;
     }
 
-    /**
-     * 新增数据
-     *
-     * @param user 实例对象
-     * @return 实例对象
-     */
-    @Override
-    public User insert(User user) {
-        this.userDao.insert(user);
-        return user;
-    }
-
-    /**
-     * 修改数据
-     *
-     * @param user 实例对象
-     * @return 实例对象
-     */
-    @Override
-    public User update(User user) {
-        this.userDao.update(user);
-        return this.queryById(user.getId());
-    }
-
-    /**
-     * 通过主键删除数据
-     *
-     * @param id 主键
-     * @return 是否成功
-     */
-    @Override
-    public boolean deleteById(Long id) {
-        return this.userDao.deleteById(id) > 0;
-    }
-
-    /**
-     * 导出Excel
-     * @param response
-     * @param user
-     * @param pageNum
-     * @param pageSize
-     * @throws IOException
-     */
-    @Override
-    public void exportExcelUser(HttpServletResponse response, User user, Integer pageNum, Integer pageSize) throws IOException {
-        response.setContentType("application/octet-stream");
-        response.setCharacterEncoding("utf-8");
-        String fileName = URLEncoder.encode("用户信息", "UTF-8").replaceAll("\\+", "%20");
-        response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
-        Page<User> page = queryByPage(user, pageNum, pageSize);
-        EasyExcel.write(response.getOutputStream(), User.class).sheet("用户信息").doWrite(page.getRecords());
-    }
 }

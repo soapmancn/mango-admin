@@ -1,30 +1,40 @@
 package com.soapman.entity;
 
 import java.util.Date;
+
+
+import lombok.*;
+
 import java.io.Serializable;
 
-import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 
 /**
  * 字典表(Dict)实体类
  *
  * @author soapman
- * @since 2022-07-04 14:59:30
+ * @since 2022-07-05 18:06:53
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Dict implements Serializable {
-    private static final long serialVersionUID = 654426700557155069L;
+@ApiModel(description = "Dict实体类")
+@TableName("sys_dict")
+public class Dict extends Model<Dict> implements Serializable {
+    private static final long serialVersionUID = 562494833644202738L;
     /**
      * 编号
      */
     @ApiModelProperty("编号")
+    @TableId(type = IdType.AUTO)
     private Long id;
     /**
      * 数据值

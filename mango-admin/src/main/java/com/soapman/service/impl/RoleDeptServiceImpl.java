@@ -1,80 +1,44 @@
 package com.soapman.service.impl;
 
+import java.util.Objects;
+
 import com.soapman.entity.RoleDept;
-import com.soapman.dao.RoleDeptDao;
+import com.soapman.mapper.RoleDeptMapper;
 import com.soapman.service.RoleDeptService;
 import org.springframework.stereotype.Service;
+import org.apache.commons.lang3.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-
-import javax.annotation.Resource;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 /**
  * 角色机构(RoleDept)表服务实现类
  *
  * @author soapman
- * @since 2022-07-04 14:59:33
+ * @since 2022-07-05 18:06:54
  */
-@Service("roleDeptService")
-public class RoleDeptServiceImpl implements RoleDeptService {
-    @Resource
-    private RoleDeptDao roleDeptDao;
-
-    /**
-     * 通过ID查询单条数据
-     *
-     * @param id 主键
-     * @return 实例对象
-     */
-    @Override
-    public RoleDept queryById(Long id) {
-        return this.roleDeptDao.queryById(id);
-    }
+@Service
+public class RoleDeptServiceImpl extends ServiceImpl<RoleDeptMapper, RoleDept> implements RoleDeptService {
 
     /**
      * 分页查询
      *
-     * @param roleDept 筛选条件
-     * @return 查询结果
+     * @param roleDept
+     * @param pageNum
+     * @param pageSize
+     * @return
      */
     @Override
     public Page<RoleDept> queryByPage(RoleDept roleDept, Integer pageNum, Integer pageSize) {
         Page<RoleDept> page = new Page<>(pageNum, pageSize);
-        Page<RoleDept> pageResult = roleDeptDao.queryByPage(page, roleDept);
-        return pageResult;
+        QueryWrapper<RoleDept> wrapper = new QueryWrapper<>();
+        if (!Objects.isNull(roleDept)) {
+            //自定义过滤条件
+            wrapper.like(StringUtils.isNotBlank(roleDept.getCreateBy()), "createBy", roleDept.getCreateBy());
+            wrapper.like(StringUtils.isNotBlank(roleDept.getLastUpdateBy()), "lastUpdateBy", roleDept.getLastUpdateBy());
+        }
+        Page<RoleDept> result = baseMapper.selectPage(page, wrapper);
+        return result;
     }
 
-    /**
-     * 新增数据
-     *
-     * @param roleDept 实例对象
-     * @return 实例对象
-     */
-    @Override
-    public RoleDept insert(RoleDept roleDept) {
-        this.roleDeptDao.insert(roleDept);
-        return roleDept;
-    }
-
-    /**
-     * 修改数据
-     *
-     * @param roleDept 实例对象
-     * @return 实例对象
-     */
-    @Override
-    public RoleDept update(RoleDept roleDept) {
-        this.roleDeptDao.update(roleDept);
-        return this.queryById(roleDept.getId());
-    }
-
-    /**
-     * 通过主键删除数据
-     *
-     * @param id 主键
-     * @return 是否成功
-     */
-    @Override
-    public boolean deleteById(Long id) {
-        return this.roleDeptDao.deleteById(id) > 0;
-    }
 }

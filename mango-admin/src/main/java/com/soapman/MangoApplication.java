@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @EnableWebMvc
 @SpringBootApplication
-@MapperScan("com.soapman.dao")
+@MapperScan("com.soapman.mapper")
 public class MangoApplication {
     public static void main(String[] args) {
         SpringApplication.run(MangoApplication.class, args);

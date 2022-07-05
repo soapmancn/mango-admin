@@ -1,80 +1,49 @@
 package com.soapman.service.impl;
 
+import java.util.Objects;
+
 import com.soapman.entity.Dict;
-import com.soapman.dao.DictDao;
+import com.soapman.mapper.DictMapper;
 import com.soapman.service.DictService;
 import org.springframework.stereotype.Service;
+import org.apache.commons.lang3.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-
-import javax.annotation.Resource;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 /**
  * 字典表(Dict)表服务实现类
  *
  * @author soapman
- * @since 2022-07-04 14:59:31
+ * @since 2022-07-05 18:06:53
  */
-@Service("dictService")
-public class DictServiceImpl implements DictService {
-    @Resource
-    private DictDao dictDao;
-
-    /**
-     * 通过ID查询单条数据
-     *
-     * @param id 主键
-     * @return 实例对象
-     */
-    @Override
-    public Dict queryById(Long id) {
-        return this.dictDao.queryById(id);
-    }
+@Service
+public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements DictService {
 
     /**
      * 分页查询
      *
-     * @param dict 筛选条件
-     * @return 查询结果
+     * @param dict
+     * @param pageNum
+     * @param pageSize
+     * @return
      */
     @Override
     public Page<Dict> queryByPage(Dict dict, Integer pageNum, Integer pageSize) {
         Page<Dict> page = new Page<>(pageNum, pageSize);
-        Page<Dict> pageResult = dictDao.queryByPage(page, dict);
-        return pageResult;
+        QueryWrapper<Dict> wrapper = new QueryWrapper<>();
+        if (!Objects.isNull(dict)) {
+            //自定义过滤条件
+            wrapper.like(StringUtils.isNotBlank(dict.getValue()), "value", dict.getValue());
+            wrapper.like(StringUtils.isNotBlank(dict.getLabel()), "label", dict.getLabel());
+            wrapper.like(StringUtils.isNotBlank(dict.getType()), "type", dict.getType());
+            wrapper.like(StringUtils.isNotBlank(dict.getDescription()), "description", dict.getDescription());
+            wrapper.like(StringUtils.isNotBlank(dict.getCreateBy()), "createBy", dict.getCreateBy());
+            wrapper.like(StringUtils.isNotBlank(dict.getLastUpdateBy()), "lastUpdateBy", dict.getLastUpdateBy());
+            wrapper.like(StringUtils.isNotBlank(dict.getRemarks()), "remarks", dict.getRemarks());
+        }
+        Page<Dict> result = baseMapper.selectPage(page, wrapper);
+        return result;
     }
 
-    /**
-     * 新增数据
-     *
-     * @param dict 实例对象
-     * @return 实例对象
-     */
-    @Override
-    public Dict insert(Dict dict) {
-        this.dictDao.insert(dict);
-        return dict;
-    }
-
-    /**
-     * 修改数据
-     *
-     * @param dict 实例对象
-     * @return 实例对象
-     */
-    @Override
-    public Dict update(Dict dict) {
-        this.dictDao.update(dict);
-        return this.queryById(dict.getId());
-    }
-
-    /**
-     * 通过主键删除数据
-     *
-     * @param id 主键
-     * @return 是否成功
-     */
-    @Override
-    public boolean deleteById(Long id) {
-        return this.dictDao.deleteById(id) > 0;
-    }
 }

@@ -3,10 +3,9 @@ package com.soapman.controller;
 import com.soapman.entity.Dept;
 import com.soapman.service.DeptService;
 import io.swagger.annotations.Api;
+import com.soapman.core.http.HttpResult;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 
 import javax.annotation.Resource;
@@ -15,7 +14,7 @@ import javax.annotation.Resource;
  * 机构管理(Dept)表控制层
  *
  * @author soapman
- * @since 2022-07-04 14:59:30
+ * @since 2022-07-05 18:06:53
  */
 @Api(tags = "机构管理")
 @RestController
@@ -35,8 +34,8 @@ public class DeptController {
      */
     @ApiOperation("分页查询")
     @GetMapping
-    public ResponseEntity<Page<Dept>> queryByPage(Dept dept, @RequestParam(name = "pageNum", defaultValue = "1") Integer pageNum, @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize) {
-        return ResponseEntity.ok(this.deptService.queryByPage(dept, pageNum, pageSize));
+    public HttpResult queryByPage(Dept dept, @RequestParam(name = "pageNum", defaultValue = "1") Integer pageNum, @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize) {
+        return HttpResult.ok(deptService.queryByPage(dept, pageNum, pageSize));
     }
 
     /**
@@ -47,32 +46,32 @@ public class DeptController {
      */
     @ApiOperation("通过主键查询单条数据")
     @GetMapping("{id}")
-    public ResponseEntity<Dept> queryById(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(this.deptService.queryById(id));
+    public HttpResult queryById(@PathVariable("id") Long id) {
+        return HttpResult.ok(deptService.getById(id));
     }
 
     /**
      * 新增数据
      *
      * @param dept 实体
-     * @return 新增结果
+     * @return 新增是否成功
      */
     @ApiOperation("新增数据")
     @PostMapping
-    public ResponseEntity<Dept> add(@RequestBody Dept dept) {
-        return ResponseEntity.ok(this.deptService.insert(dept));
+    public HttpResult add(@RequestBody Dept dept) {
+        return HttpResult.ok(deptService.save(dept));
     }
 
     /**
      * 编辑数据
      *
      * @param dept 实体
-     * @return 编辑结果
+     * @return 编辑是否成功
      */
     @ApiOperation("编辑数据")
     @PutMapping
-    public ResponseEntity<Dept> edit(@RequestBody Dept dept) {
-        return ResponseEntity.ok(this.deptService.update(dept));
+    public HttpResult edit(@RequestBody Dept dept) {
+        return HttpResult.ok(deptService.updateById(dept));
     }
 
     /**
@@ -83,8 +82,8 @@ public class DeptController {
      */
     @ApiOperation("删除数据")
     @DeleteMapping
-    public ResponseEntity<Boolean> deleteById(Long id) {
-        return ResponseEntity.ok(this.deptService.deleteById(id));
+    public HttpResult deleteById(Long id) {
+        return HttpResult.ok(deptService.removeById(id));
     }
 
 }
