@@ -1,6 +1,10 @@
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    //spring security 教程 https://www.bilibili.com/video/BV1mm4y1X7Hc?p=7&spm_id_from=pageDriver&vd_source=3afb466da29af5fb98fc08f198a6e4a6
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.7.1'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis', version: '2.7.1'
+    implementation group: 'org.apache.commons', name: 'commons-pool2', version: '2.11.1'
     implementation group: 'com.github.xiaoymin', name: 'knife4j-spring-boot-starter', version: '3.0.3'
     implementation group: 'com.baomidou', name: 'mybatis-plus-boot-starter', version: '3.5.2'
     implementation group: 'com.baomidou', name: 'mybatis-plus-generator', version: '3.5.3'
