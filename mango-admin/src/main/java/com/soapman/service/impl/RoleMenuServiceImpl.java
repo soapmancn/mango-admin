@@ -15,7 +15,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
  * 角色菜单(RoleMenu)表服务实现类
  *
  * @author soapman
- * @since 2022-07-05 18:06:54
+ * @since 2022-07-06 07:35:43
  */
 @Service
 public class RoleMenuServiceImpl extends ServiceImpl<RoleMenuMapper, RoleMenu> implements RoleMenuService {
@@ -34,8 +34,8 @@ public class RoleMenuServiceImpl extends ServiceImpl<RoleMenuMapper, RoleMenu> i
         QueryWrapper<RoleMenu> wrapper = new QueryWrapper<>();
         if (!Objects.isNull(roleMenu)) {
             //自定义过滤条件
-            wrapper.like(StringUtils.isNotBlank(roleMenu.getCreateBy()), "createBy", roleMenu.getCreateBy());
-            wrapper.like(StringUtils.isNotBlank(roleMenu.getLastUpdateBy()), "lastUpdateBy", roleMenu.getLastUpdateBy());
+            wrapper.like(StringUtils.isNotBlank(roleMenu.getCreateBy()), "create_by", roleMenu.getCreateBy());
+            wrapper.like(StringUtils.isNotBlank(roleMenu.getLastUpdateBy()), "last_update_by", roleMenu.getLastUpdateBy());
         }
         Page<RoleMenu> result = baseMapper.selectPage(page, wrapper);
         return result;

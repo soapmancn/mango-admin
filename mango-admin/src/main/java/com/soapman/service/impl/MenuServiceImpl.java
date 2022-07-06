@@ -15,7 +15,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
  * 菜单管理(Menu)表服务实现类
  *
  * @author soapman
- * @since 2022-07-05 18:06:53
+ * @since 2022-07-06 07:35:42
  */
 @Service
 public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements MenuService {
@@ -38,8 +38,8 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
             wrapper.like(StringUtils.isNotBlank(menu.getUrl()), "url", menu.getUrl());
             wrapper.like(StringUtils.isNotBlank(menu.getPerms()), "perms", menu.getPerms());
             wrapper.like(StringUtils.isNotBlank(menu.getIcon()), "icon", menu.getIcon());
-            wrapper.like(StringUtils.isNotBlank(menu.getCreateBy()), "createBy", menu.getCreateBy());
-            wrapper.like(StringUtils.isNotBlank(menu.getLastUpdateBy()), "lastUpdateBy", menu.getLastUpdateBy());
+            wrapper.like(StringUtils.isNotBlank(menu.getCreateBy()), "create_by", menu.getCreateBy());
+            wrapper.like(StringUtils.isNotBlank(menu.getLastUpdateBy()), "last_update_by", menu.getLastUpdateBy());
         }
         Page<Menu> result = baseMapper.selectPage(page, wrapper);
         return result;

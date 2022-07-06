@@ -15,7 +15,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
  * 角色管理(Role)表服务实现类
  *
  * @author soapman
- * @since 2022-07-05 18:06:54
+ * @since 2022-07-06 07:35:43
  */
 @Service
 public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements RoleService {
@@ -36,8 +36,8 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
             //自定义过滤条件
             wrapper.like(StringUtils.isNotBlank(role.getName()), "name", role.getName());
             wrapper.like(StringUtils.isNotBlank(role.getRemark()), "remark", role.getRemark());
-            wrapper.like(StringUtils.isNotBlank(role.getCreateBy()), "createBy", role.getCreateBy());
-            wrapper.like(StringUtils.isNotBlank(role.getLastUpdateBy()), "lastUpdateBy", role.getLastUpdateBy());
+            wrapper.like(StringUtils.isNotBlank(role.getCreateBy()), "create_by", role.getCreateBy());
+            wrapper.like(StringUtils.isNotBlank(role.getLastUpdateBy()), "last_update_by", role.getLastUpdateBy());
         }
         Page<Role> result = baseMapper.selectPage(page, wrapper);
         return result;

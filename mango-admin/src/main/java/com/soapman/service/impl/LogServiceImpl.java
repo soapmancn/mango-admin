@@ -15,7 +15,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
  * 系统操作日志(Log)表服务实现类
  *
  * @author soapman
- * @since 2022-07-05 18:06:53
+ * @since 2022-07-06 07:35:42
  */
 @Service
 public class LogServiceImpl extends ServiceImpl<LogMapper, Log> implements LogService {
@@ -34,13 +34,13 @@ public class LogServiceImpl extends ServiceImpl<LogMapper, Log> implements LogSe
         QueryWrapper<Log> wrapper = new QueryWrapper<>();
         if (!Objects.isNull(log)) {
             //自定义过滤条件
-            wrapper.like(StringUtils.isNotBlank(log.getUserName()), "userName", log.getUserName());
+            wrapper.like(StringUtils.isNotBlank(log.getUserName()), "user_name", log.getUserName());
             wrapper.like(StringUtils.isNotBlank(log.getOperation()), "operation", log.getOperation());
             wrapper.like(StringUtils.isNotBlank(log.getMethod()), "method", log.getMethod());
             wrapper.like(StringUtils.isNotBlank(log.getParams()), "params", log.getParams());
             wrapper.like(StringUtils.isNotBlank(log.getIp()), "ip", log.getIp());
-            wrapper.like(StringUtils.isNotBlank(log.getCreateBy()), "createBy", log.getCreateBy());
-            wrapper.like(StringUtils.isNotBlank(log.getLastUpdateBy()), "lastUpdateBy", log.getLastUpdateBy());
+            wrapper.like(StringUtils.isNotBlank(log.getCreateBy()), "create_by", log.getCreateBy());
+            wrapper.like(StringUtils.isNotBlank(log.getLastUpdateBy()), "last_update_by", log.getLastUpdateBy());
         }
         Page<Log> result = baseMapper.selectPage(page, wrapper);
         return result;

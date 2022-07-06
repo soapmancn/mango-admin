@@ -15,7 +15,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
  * 用户管理(User)表服务实现类
  *
  * @author soapman
- * @since 2022-07-05 18:06:54
+ * @since 2022-07-06 07:35:43
  */
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
@@ -35,14 +35,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (!Objects.isNull(user)) {
             //自定义过滤条件
             wrapper.like(StringUtils.isNotBlank(user.getName()), "name", user.getName());
-            wrapper.like(StringUtils.isNotBlank(user.getNickName()), "nickName", user.getNickName());
+            wrapper.like(StringUtils.isNotBlank(user.getNickName()), "nick_name", user.getNickName());
             wrapper.like(StringUtils.isNotBlank(user.getAvatar()), "avatar", user.getAvatar());
             wrapper.like(StringUtils.isNotBlank(user.getPassword()), "password", user.getPassword());
             wrapper.like(StringUtils.isNotBlank(user.getSalt()), "salt", user.getSalt());
             wrapper.like(StringUtils.isNotBlank(user.getEmail()), "email", user.getEmail());
             wrapper.like(StringUtils.isNotBlank(user.getMobile()), "mobile", user.getMobile());
-            wrapper.like(StringUtils.isNotBlank(user.getCreateBy()), "createBy", user.getCreateBy());
-            wrapper.like(StringUtils.isNotBlank(user.getLastUpdateBy()), "lastUpdateBy", user.getLastUpdateBy());
+            wrapper.like(StringUtils.isNotBlank(user.getCreateBy()), "create_by", user.getCreateBy());
+            wrapper.like(StringUtils.isNotBlank(user.getLastUpdateBy()), "last_update_by", user.getLastUpdateBy());
         }
         Page<User> result = baseMapper.selectPage(page, wrapper);
         return result;

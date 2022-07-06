@@ -15,7 +15,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
  * 系统配置表(Config)表服务实现类
  *
  * @author soapman
- * @since 2022-07-05 18:06:53
+ * @since 2022-07-06 07:35:42
  */
 @Service
 public class ConfigServiceImpl extends ServiceImpl<ConfigMapper, Config> implements ConfigService {
@@ -38,8 +38,8 @@ public class ConfigServiceImpl extends ServiceImpl<ConfigMapper, Config> impleme
             wrapper.like(StringUtils.isNotBlank(config.getLabel()), "label", config.getLabel());
             wrapper.like(StringUtils.isNotBlank(config.getType()), "type", config.getType());
             wrapper.like(StringUtils.isNotBlank(config.getDescription()), "description", config.getDescription());
-            wrapper.like(StringUtils.isNotBlank(config.getCreateBy()), "createBy", config.getCreateBy());
-            wrapper.like(StringUtils.isNotBlank(config.getLastUpdateBy()), "lastUpdateBy", config.getLastUpdateBy());
+            wrapper.like(StringUtils.isNotBlank(config.getCreateBy()), "create_by", config.getCreateBy());
+            wrapper.like(StringUtils.isNotBlank(config.getLastUpdateBy()), "last_update_by", config.getLastUpdateBy());
             wrapper.like(StringUtils.isNotBlank(config.getRemarks()), "remarks", config.getRemarks());
         }
         Page<Config> result = baseMapper.selectPage(page, wrapper);

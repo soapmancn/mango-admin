@@ -15,7 +15,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
  * 字典表(Dict)表服务实现类
  *
  * @author soapman
- * @since 2022-07-05 18:06:53
+ * @since 2022-07-06 07:35:42
  */
 @Service
 public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements DictService {
@@ -38,8 +38,8 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
             wrapper.like(StringUtils.isNotBlank(dict.getLabel()), "label", dict.getLabel());
             wrapper.like(StringUtils.isNotBlank(dict.getType()), "type", dict.getType());
             wrapper.like(StringUtils.isNotBlank(dict.getDescription()), "description", dict.getDescription());
-            wrapper.like(StringUtils.isNotBlank(dict.getCreateBy()), "createBy", dict.getCreateBy());
-            wrapper.like(StringUtils.isNotBlank(dict.getLastUpdateBy()), "lastUpdateBy", dict.getLastUpdateBy());
+            wrapper.like(StringUtils.isNotBlank(dict.getCreateBy()), "create_by", dict.getCreateBy());
+            wrapper.like(StringUtils.isNotBlank(dict.getLastUpdateBy()), "last_update_by", dict.getLastUpdateBy());
             wrapper.like(StringUtils.isNotBlank(dict.getRemarks()), "remarks", dict.getRemarks());
         }
         Page<Dict> result = baseMapper.selectPage(page, wrapper);

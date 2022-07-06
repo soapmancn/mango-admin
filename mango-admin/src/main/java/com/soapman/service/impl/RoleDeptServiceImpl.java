@@ -15,7 +15,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
  * 角色机构(RoleDept)表服务实现类
  *
  * @author soapman
- * @since 2022-07-05 18:06:54
+ * @since 2022-07-06 07:35:43
  */
 @Service
 public class RoleDeptServiceImpl extends ServiceImpl<RoleDeptMapper, RoleDept> implements RoleDeptService {
@@ -34,8 +34,8 @@ public class RoleDeptServiceImpl extends ServiceImpl<RoleDeptMapper, RoleDept> i
         QueryWrapper<RoleDept> wrapper = new QueryWrapper<>();
         if (!Objects.isNull(roleDept)) {
             //自定义过滤条件
-            wrapper.like(StringUtils.isNotBlank(roleDept.getCreateBy()), "createBy", roleDept.getCreateBy());
-            wrapper.like(StringUtils.isNotBlank(roleDept.getLastUpdateBy()), "lastUpdateBy", roleDept.getLastUpdateBy());
+            wrapper.like(StringUtils.isNotBlank(roleDept.getCreateBy()), "create_by", roleDept.getCreateBy());
+            wrapper.like(StringUtils.isNotBlank(roleDept.getLastUpdateBy()), "last_update_by", roleDept.getLastUpdateBy());
         }
         Page<RoleDept> result = baseMapper.selectPage(page, wrapper);
         return result;
