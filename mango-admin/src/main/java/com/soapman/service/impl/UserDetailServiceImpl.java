@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Objects;
+import java.util.*;
 
 @Service
 public class UserDetailServiceImpl implements UserDetailsService {
@@ -25,8 +25,10 @@ public class UserDetailServiceImpl implements UserDetailsService {
         if (Objects.isNull(user)){
             throw new RuntimeException("用户名或密码错误");
         }
-        //TODO 查询用户权限
-        return new LoginUser(user);
+        //查询用户权限
+        Set<String> permissions = userService.findPermissions(username);
+
+        return new LoginUser(user, permissions);
     }
 
 }

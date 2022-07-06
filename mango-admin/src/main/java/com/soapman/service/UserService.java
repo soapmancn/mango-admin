@@ -4,6 +4,8 @@ import com.soapman.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
+import java.util.Set;
+
 /**
  * 用户管理(User)表服务接口
  *
@@ -21,5 +23,12 @@ public interface UserService extends IService<User> {
      * @return
      */
     Page<User> queryByPage(User user, Integer pageNum, Integer pageSize);
+
+    /**
+     * 查找用户的菜单权限标识集合
+     * @param userName
+     * @return
+     */
+    Set<String> findPermissions(String userName);
 
 }

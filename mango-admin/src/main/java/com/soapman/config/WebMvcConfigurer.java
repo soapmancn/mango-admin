@@ -1,13 +1,10 @@
 package com.soapman.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
-import java.util.List;
 
 @Configuration
 public class WebMvcConfigurer extends WebMvcConfigurationSupport {
@@ -28,7 +25,7 @@ public class WebMvcConfigurer extends WebMvcConfigurationSupport {
         registry.addMapping("/**")
                 .allowedOriginPatterns("*")
                 .allowedMethods("POST", "GET", "DELETE", "PUT", "OPTIONS")
-                .maxAge(168000)
+                .maxAge(3600)
                 .allowedHeaders("*")
                 .allowCredentials(true);
     }

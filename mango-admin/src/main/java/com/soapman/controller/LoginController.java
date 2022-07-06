@@ -45,7 +45,7 @@ public class LoginController {
     @GetMapping("captcha.jpg")
     public void captcha(HttpServletResponse response, HttpServletRequest request) throws IOException {
         byte[] captchaChallengeAsJpeg;
-        ByteArrayOutputStream jpegOutputStream = null;
+        ByteArrayOutputStream jpegOutputStream = new ByteArrayOutputStream();
         try {
             // 生产验证码字符串并保存到session中
             String createText = defaultKaptcha.createText();

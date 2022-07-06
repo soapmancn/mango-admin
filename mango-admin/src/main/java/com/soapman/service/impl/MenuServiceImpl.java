@@ -1,5 +1,6 @@
 package com.soapman.service.impl;
 
+import java.util.List;
 import java.util.Objects;
 
 import com.soapman.entity.Menu;
@@ -43,6 +44,14 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         }
         Page<Menu> result = baseMapper.selectPage(page, wrapper);
         return result;
+    }
+
+    @Override
+    public List<Menu> findByUser(String userName) {
+        if(userName == null || "".equals(userName) || "admin".equalsIgnoreCase(userName)) {
+            return this.list();
+        }
+        return this.baseMapper.findByUserName(userName);
     }
 
 }

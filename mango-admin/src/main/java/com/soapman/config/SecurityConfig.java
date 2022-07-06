@@ -1,6 +1,8 @@
 package com.soapman.config;
 
 import com.soapman.filter.JwtAuthFilter;
+import com.soapman.handler.AccessDeniedHandlerImpl;
+import com.soapman.handler.AuthenticationEntryPointImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,9 +15,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import javax.annotation.Resource;
 
 @Configuration
 @EnableWebSecurity // 添加 security 过滤器
@@ -23,10 +24,16 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 public class SecurityConfig  {
 
     // jwt 校验过滤器，从 http 头部 token 字段读取 token 并校验
-    @Bean
-    public JwtAuthFilter authFilter() throws Exception {
-        return new JwtAuthFilter();
-    }
+    @Resource
+    private JwtAuthFilter jwtAuthFilter;
+
+    // 认证异常提示处理
+    @Resource
+    private AuthenticationEntryPointImpl authenticationEntryPoint;
+
+    // 鉴权异常提示处理
+    @Resource
+    private AccessDeniedHandlerImpl accessDeniedHandler;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -49,21 +56,12 @@ public class SecurityConfig  {
                         .antMatchers("/login/in","/login/captcha.jpg","/doc.html", "/swagger-resources","/v3/api-docs").permitAll()// 请求放开
                         .anyRequest().authenticated()// 其他地址的访问均需验证权限
                 )
-                .addFilterBefore(authFilter(), UsernamePasswordAuthenticationFilter.class) // 添加 JWT 过滤器，JWT 过滤器在用户名密码认证过滤器之前
-                //.userDetailsService(xxxAuthUserService) // 认证用户时用户信息加载配置，注入springAuthUserService
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class) // 添加 JWT 过滤器，JWT 过滤器在用户名密码认证过滤器之前
+                .exceptionHandling()
+                .authenticationEntryPoint(authenticationEntryPoint) // 配置认证失败处理器
+                .accessDeniedHandler(accessDeniedHandler).and() // 授权失败处理器
+                .cors().and() // Security允许跨域
                 .build();
-    }
-
-
-    /**
-     * 配置跨源访问(CORS)
-     * @return
-     */
-    @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
-        return source;
     }
 
 }

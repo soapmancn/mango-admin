@@ -5,6 +5,7 @@ import com.soapman.service.UserService;
 import io.swagger.annotations.Api;
 import com.soapman.core.http.HttpResult;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -32,6 +33,7 @@ public class UserController {
      * @param user 筛选条件
      * @return 查询结果
      */
+    @PreAuthorize("hasAuthority('sys:user:view')")
     @ApiOperation("分页查询")
     @GetMapping
     public HttpResult queryByPage(User user, @RequestParam(name = "pageNum", defaultValue = "1") Integer pageNum, @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize) {
