@@ -2,9 +2,11 @@ package com.soapman.service.impl;
 
 import cn.hutool.jwt.JWTUtil;
 import com.alibaba.fastjson2.JSON;
+import com.soapman.core.http.HttpResult;
 import com.soapman.domain.LoginUser;
-import com.soapman.entity.User;
 import com.soapman.service.LoginService;
+import com.soapman.vo.LoginVo;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -13,6 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,11 +32,18 @@ public class LoginServiceImpl implements LoginService {
     private StringRedisTemplate stringRedisTemplate;
 
     @Override
-    public Object login(User user) {
+    public HttpResult login(LoginVo user, HttpServletRequest request) {
+        //图形验证码校验
+        String verificationCodeIn = (String) request.getSession().getAttribute("verificationCode");
+        request.getSession().removeAttribute("verificationCode");
+        if (StringUtils.isEmpty(verificationCodeIn) || !verificationCodeIn.equals(user.getVerificationCode())) {
+            return HttpResult.error("验证码错误");
+        }
+
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user.getName(), user.getPassword());
         Authentication authenticate = authenticationManager.authenticate(authenticationToken);
         if (Objects.isNull(authenticate)){
-            throw new RuntimeException("登录失败");
+            return HttpResult.error("登录失败");
         }
 
         //如果认证通过了，使用userid生成一个jwt jwt存入redis 并返回
@@ -50,20 +60,20 @@ public class LoginServiceImpl implements LoginService {
             stringRedisTemplate.opsForValue().set("token:"+userId, JSON.toJSONString(authUser), 1, TimeUnit.HOURS);
         }catch (Exception e){
             e.printStackTrace();
-            throw new RuntimeException("登录失败");
+            return HttpResult.error("登录缓存失败");
         }
 
 
-        return jwtToken;
+        return HttpResult.ok("登录成功", jwtToken);
     }
 
     @Override
-    public String loginOut() {
+    public HttpResult loginOut() {
         //获取SecurityContextHolder中的用户id
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
         //删除redis中的值
         stringRedisTemplate.delete("token:"+loginUser.getUser().getId());
-        return "success";
+        return HttpResult.ok("登出成功");
     }
 }

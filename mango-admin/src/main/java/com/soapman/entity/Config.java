@@ -20,16 +20,17 @@ import com.baomidou.mybatisplus.extension.activerecord.Model;
  * 系统配置表(Config)实体类
  *
  * @author soapman
- * @since 2022-07-05 18:06:53
+ * @since 2022-07-06 13:26:05
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 @ApiModel(description = "Config实体类")
 @TableName("sys_config")
 public class Config extends Model<Config> implements Serializable {
-    private static final long serialVersionUID = -24973900569640419L;
+    private static final long serialVersionUID = -52403691288825696L;
     /**
      * 编号
      */

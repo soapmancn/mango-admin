@@ -20,16 +20,17 @@ import com.baomidou.mybatisplus.extension.activerecord.Model;
  * 菜单管理(Menu)实体类
  *
  * @author soapman
- * @since 2022-07-05 18:06:53
+ * @since 2022-07-06 13:26:05
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 @ApiModel(description = "Menu实体类")
 @TableName("sys_menu")
 public class Menu extends Model<Menu> implements Serializable {
-    private static final long serialVersionUID = 504593972268476860L;
+    private static final long serialVersionUID = -49514315135433470L;
     /**
      * 编号
      */

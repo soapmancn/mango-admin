@@ -20,16 +20,17 @@ import com.baomidou.mybatisplus.extension.activerecord.Model;
  * 系统登录日志(LoginLog)实体类
  *
  * @author soapman
- * @since 2022-07-05 18:06:53
+ * @since 2022-07-06 13:26:05
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 @ApiModel(description = "LoginLog实体类")
 @TableName("sys_login_log")
 public class LoginLog extends Model<LoginLog> implements Serializable {
-    private static final long serialVersionUID = 851104972789312666L;
+    private static final long serialVersionUID = 243134714558616148L;
     /**
      * 编号
      */

@@ -20,16 +20,17 @@ import com.baomidou.mybatisplus.extension.activerecord.Model;
  * 用户管理(User)实体类
  *
  * @author soapman
- * @since 2022-07-05 18:06:54
+ * @since 2022-07-06 13:26:05
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 @ApiModel(description = "User实体类")
 @TableName("sys_user")
 public class User extends Model<User> implements Serializable {
-    private static final long serialVersionUID = -83425585473067601L;
+    private static final long serialVersionUID = -33178875753993786L;
     /**
      * 编号
      */

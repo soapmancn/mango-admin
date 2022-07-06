@@ -20,16 +20,17 @@ import com.baomidou.mybatisplus.extension.activerecord.Model;
  * 角色菜单(RoleMenu)实体类
  *
  * @author soapman
- * @since 2022-07-05 18:06:54
+ * @since 2022-07-06 13:26:05
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 @ApiModel(description = "RoleMenu实体类")
 @TableName("sys_role_menu")
 public class RoleMenu extends Model<RoleMenu> implements Serializable {
-    private static final long serialVersionUID = 170600584547260772L;
+    private static final long serialVersionUID = -15967439441071401L;
     /**
      * 编号
      */

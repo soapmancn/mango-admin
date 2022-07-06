@@ -20,16 +20,17 @@ import com.baomidou.mybatisplus.extension.activerecord.Model;
  * 机构管理(Dept)实体类
  *
  * @author soapman
- * @since 2022-07-05 18:06:53
+ * @since 2022-07-06 13:26:05
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 @ApiModel(description = "Dept实体类")
 @TableName("sys_dept")
 public class Dept extends Model<Dept> implements Serializable {
-    private static final long serialVersionUID = -27786569471041425L;
+    private static final long serialVersionUID = -47605160394763742L;
     /**
      * 编号
      */

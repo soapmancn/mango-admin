@@ -20,16 +20,17 @@ import com.baomidou.mybatisplus.extension.activerecord.Model;
  * 字典表(Dict)实体类
  *
  * @author soapman
- * @since 2022-07-05 18:06:53
+ * @since 2022-07-06 13:26:05
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 @ApiModel(description = "Dict实体类")
 @TableName("sys_dict")
 public class Dict extends Model<Dict> implements Serializable {
-    private static final long serialVersionUID = 562494833644202738L;
+    private static final long serialVersionUID = -93501398878749156L;
     /**
      * 编号
      */

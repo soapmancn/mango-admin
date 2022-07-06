@@ -1,9 +1,12 @@
 package com.soapman.service;
 
-import com.soapman.entity.User;
+import com.soapman.core.http.HttpResult;
+import com.soapman.vo.LoginVo;
+
+import javax.servlet.http.HttpServletRequest;
 
 public interface LoginService {
-    Object login(User user);
+    HttpResult login(LoginVo user, HttpServletRequest request);
 
-    String loginOut();
+    HttpResult loginOut();
 }
