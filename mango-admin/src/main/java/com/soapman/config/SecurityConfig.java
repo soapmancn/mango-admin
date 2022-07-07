@@ -53,7 +53,7 @@ public class SecurityConfig  {
                 //.exceptionHandling().authenticationEntryPoint(jwtAuthError).accessDeniedHandler(jwtAuthError).and() // 设置 jwtAuthError 处理认证失败、鉴权失败
                 // 下面开始设置权限
                 .authorizeRequests(authorize -> authorize
-                        .antMatchers("/login/in","/login/captcha.jpg","/doc.html", "/swagger-resources","/v3/api-docs").permitAll()// 请求放开
+                        .antMatchers("/login/in","/login/captcha.jpg","/doc.html", "/swagger-resources","/v3/api-docs", "/webjars/**").permitAll()// 请求放开
                         .anyRequest().authenticated()// 其他地址的访问均需验证权限
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class) // 添加 JWT 过滤器，JWT 过滤器在用户名密码认证过滤器之前
