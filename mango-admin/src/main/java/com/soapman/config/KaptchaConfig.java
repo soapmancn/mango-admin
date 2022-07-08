@@ -16,9 +16,9 @@ public class KaptchaConfig {
         DefaultKaptcha defaultKaptcha = new DefaultKaptcha();
         Properties properties = new Properties();
         // 图片边框
-        properties.setProperty("kaptcha.border", "yes");
+        //properties.setProperty("kaptcha.border", "yes");
         // 边框颜色
-        properties.setProperty("kaptcha.border.color", "105,179,90");
+        //properties.setProperty("kaptcha.border.color", "105,179,90");
         // 字体颜色
         properties.setProperty("kaptcha.textproducer.font.color", "red");
         // 图片宽

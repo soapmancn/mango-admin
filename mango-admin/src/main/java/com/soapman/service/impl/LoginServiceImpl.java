@@ -57,7 +57,7 @@ public class LoginServiceImpl implements LoginService {
 
         //缓存60秒
         try {
-            stringRedisTemplate.opsForValue().set("token:"+userId, JSON.toJSONString(authUser), 1, TimeUnit.HOURS);
+            stringRedisTemplate.opsForValue().set("token:"+userId, JSON.toJSONString(authUser), 1, TimeUnit.DAYS);
         }catch (Exception e){
             e.printStackTrace();
             return HttpResult.error("登录缓存失败");
